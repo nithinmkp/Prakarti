@@ -36,28 +36,32 @@ df<-list(GDP_PC,GDP_PC,RI_PC,RI_PC,GDP_PC_gr,GDP_PC_gr)
 df<-map(df,convert_fn,col_ind=c(1,2),fn=as.factor)
 df<-map(df,convert_fn,col_ind=3,fn=as.numeric)
 
+#variables to plot
+catvar<-df[1:3] %>% map(~.x %>% select_if(is.factor) %>% names()) %>% unlist()
+xvar<-df %>% map(~.x %>% select_if(is.numeric) %>% names()) %>% unlist()
+
 #plots
-k<-tibble(catvar=rep(c("Year","Country"),times=3),
-       leg_title=rep(c("Period","Country"),times=3),
-       legend.pos.h=c(0.29,0.33,0.29,0.73,0.29,0.274),
-       leg_row=c(3,4,3,5,3,5),
+tibble(catvar=catvar,
+       leg_title=rep(c("Country","Period"),times=3),
+       legend.pos.h=c(0.33,0.29,0.73,0.29,0.274,0.29),
+       leg_row=c(4,3,5,3,5,3),
        df=df,
-       xvar=rep(c("Log GDP Per Capita","RI_PC","Growth Rate of GDP per capita"),each=2),
+       xvar=xvar,
        gr=as.logical(rep(c("FALSE","FALSE","TRUE"),each=2)),
        xlab=rep(c("Log GDP Per Capita","Relative Income Per capita",
               "Growth Rate of GDP per capita"),each=2),
-       legend.pos.t=c(rep(1,2),0.11,rep(1,3))) %>% 
-  mutate(plot=pmap(.,kd_fn))
-  
-  
-  
-k %>% 
+       legend.pos.t=c(rep(1,2),1,0.11,rep(1,2))) %>% 
+  mutate(plot=pmap(.,kd_fn))%>% 
   mutate(filename = paste0("ggplots/", xlab, leg_title,".png")) %>% 
-    select(plot,filename) %>% 
+  select(plot,filename) %>% 
   pwalk(ggsave,width = 22.5,
         height = 29.50,
         units = "cm",
         dpi = 300)
+  
+  
+
+  
 
 
 
