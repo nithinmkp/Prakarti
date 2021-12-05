@@ -4,7 +4,8 @@ packages<-c("tidyverse","readxl","rio","RColorBrewer","formulaic","scales")
 sapply(packages,library,character.only=T)
 
 #folder to store all plots
-dir.create("ggplots")
+plot_dir<-"ggplots"
+if (!dir.exists(plot_dir)) {dir.create(plot_dir)}
 
 #read data
 sheets<-import_list("KDF.xlsx")
