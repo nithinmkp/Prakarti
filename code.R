@@ -30,11 +30,13 @@ GDP_PC_gr<-GDP_PC_gr %>%
 
 
 #list of dataframes
-df<-list(GDP_PC,GDP_PC,RI_PC,RI_PC,GDP_PC_gr,GDP_PC_gr)
+df<-list(GDP_PC,GDP_PC,RI_PC,RI_PC,GDP_PC_gr,GDP_PC_gr) %>% 
+  set_names(rep(c("GDP_PC","GDP_PC_gr","RI_PC"),each=2))
 
 #converting columns
 df<-map(df,convert_fn,col_ind=c(1,2),fn=as.factor)
 df<-map(df,convert_fn,col_ind=3,fn=as.numeric)
+list2env(df[c(1,3,5)],envir = globalenv())
 
 #variables to plot
 catvar<-df[1:3] %>% map(~.x %>% select_if(is.factor) %>% names()) %>% unlist()
@@ -59,9 +61,3 @@ tibble(catvar=catvar,
         units = "cm",
         dpi = 300)
   
-  
-
-  
-
-
-
