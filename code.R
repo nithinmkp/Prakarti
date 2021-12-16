@@ -1,5 +1,5 @@
 #Packages
-packages<-c("tidyverse","readxl","rio","RColorBrewer","formulaic","scales")
+packages<-c("tidyverse","readxl","rio","RColorBrewer","formulaic","scales","MetBrewer")
 #sapply(packages,install.packages,character.only=T) #Uncomment this line if you dont have any of these packages installed
 sapply(packages,library,character.only=T)
 
@@ -53,7 +53,7 @@ tibble(catvar=catvar,
        xlab=rep(c("Log GDP Per Capita","Relative Income Per capita",
               "Growth Rate of GDP per capita"),each=2),
        legend.pos.t=c(rep(1,2),1,0.11,rep(1,2))) %>% 
-  mutate(plot=pmap(.,kd_fn))%>% 
+  mutate(plot=pmap(.,kd_fn,pal_name="Tiepolo"))%>% 
   mutate(filename = paste0("ggplots/", xlab, leg_title,".png")) %>% 
   select(plot,filename) %>% 
   pwalk(ggsave,width = 22.5,
