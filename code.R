@@ -30,8 +30,7 @@ GDP_PC_gr<-GDP_PC_gr %>%
 
 
 #list of dataframes
-df<-list(GDP_PC,GDP_PC,RI_PC,RI_PC,GDP_PC_gr,GDP_PC_gr) %>% 
-  set_names(rep(c("GDP_PC","GDP_PC_gr","RI_PC"),each=2))
+df<-lst(GDP_PC,GDP_PC,RI_PC,RI_PC,GDP_PC_gr,GDP_PC_gr) 
 
 #converting columns
 df<-map(df,convert_fn,col_ind=c(1,2),fn=as.factor)
@@ -53,7 +52,7 @@ tibble(catvar=catvar,
        xlab=rep(c("Log GDP Per Capita","Relative Income Per capita",
               "Growth Rate of GDP per capita"),each=2),
        legend.pos.t=c(rep(1,2),1,0.11,rep(1,2))) %>% 
-  mutate(plot=pmap(.,kd_fn,pal_name="Tiepolo"))%>% 
+  mutate(plot=pmap(.,kd_fn,pal_name="Hokusai"))%>% 
   mutate(filename = paste0("ggplots/", xlab, leg_title,".png")) %>% 
   select(plot,filename) %>% 
   pwalk(ggsave,width = 22.5,
