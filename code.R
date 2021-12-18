@@ -30,7 +30,9 @@ GDP_PC_gr<-GDP_PC_gr %>%
 
 
 #list of dataframes
-df<-lst(GDP_PC,GDP_PC,RI_PC,RI_PC,GDP_PC_gr,GDP_PC_gr) 
+df_names<-names(Filter(is.data.frame,as.list(.GlobalEnv)))
+df<-map(df_names,~replicate(2,get(.x),simplify = F)) %>% flatten() %>% 
+  set_names(rep(df_names,each=2)) 
 
 #converting columns
 df<-map(df,convert_fn,col_ind=c(1,2),fn=as.factor)
