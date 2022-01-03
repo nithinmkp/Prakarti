@@ -32,6 +32,6 @@ kd_fn<- function(df,xvar,catvar,alph=0.2,siz=1.5,xlab,ylab="Density",
 }
 
 #type conversion function
-convert_fn<-function(df, col_ind,fn) {
-  df <- df %>% mutate(across(.cols = col_ind, .fns = fn))
+convert_fn<-function(df, col_ind,fn,...) {
+  df <- df %>% mutate(across(.cols = col_ind, .fns = fn,...))
 }
