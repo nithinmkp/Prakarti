@@ -6,7 +6,7 @@ package_fn<-function(pkg){
     sapply(pkg,library,character.only=T)
   }
 }
-packages<-c("tidyverse","readxl","MetBrewer","scales","rio","RcolorBrewer")
+packages<-c("tidyverse","readxl","MetBrewer","scales","rio","RColorBrewer")
 package_fn(packages)
 
 #folder to store all plots
