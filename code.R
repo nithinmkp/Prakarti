@@ -1,7 +1,12 @@
 #Packages
-packages<-c("tidyverse","readxl","rio","RColorBrewer","formulaic","scales","MetBrewer")
-#sapply(packages,install.packages,character.only=T) #Uncomment this line if you dont have any of these packages installed
-sapply(packages,library,character.only=T)
+package_fn<-function(pkg){
+  new.pkg<-pkg[!(pkg %in% installed.packages()[,"Package"])]
+  if(length(new.pkg)){
+    install.packages(new.pkg,dependencies = T)
+    sapply(pkg,library,character.only=T)
+  }
+}
+package_fn(packages)
 
 #folder to store all plots
 plot_dir<-"ggplots"
