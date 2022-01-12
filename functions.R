@@ -1,6 +1,17 @@
 
 # Functions ---------------------------------------------------------------
 
+#Package Function
+package_fn<-function(pkg){
+  new.pkg<-pkg[!(pkg %in% installed.packages()[,"Package"])]
+  if(length(new.pkg)){
+    install.packages(new.pkg,dependencies = T)
+    sapply(pkg,library,character.only=T)
+  }else{
+    sapply(pkg,library,character.only=T)
+  }
+}
+
 #KD plot function
 kd_fn<- function(df,xvar,catvar,alph=0.2,siz=1.5,xlab,ylab="Density",
                  title=NA,leg_title,gr=F,legend.pos.h=0.29,
