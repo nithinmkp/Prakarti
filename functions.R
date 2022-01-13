@@ -3,7 +3,7 @@
 
 #Package Function
 package_fn<-function(pkg){
-  new.pkg<-pkg[!(pkg %in% installed.packages()[,"Package"])]
+  new.pkg<-setdiff(pkg,installed.packages()[,"Package"])
   if(length(new.pkg)){
     install.packages(new.pkg,dependencies = T)
     sapply(pkg,library,character.only=T)
