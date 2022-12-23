@@ -1,7 +1,7 @@
 
 # Functions ---------------------------------------------------------------
 
-#Package Function
+## ---- Package Function
 package_fn<-function(pkg){
   new.pkg<-setdiff(pkg,installed.packages()[,"Package"])
   if(length(new.pkg)){
@@ -12,7 +12,7 @@ package_fn<-function(pkg){
   }
 }
 
-#KD plot function
+## ---- KD plot function
 kd_fn<- function(df,xvar,catvar,alph=0.2,siz=1.5,xlab,ylab="Density",
                  title=NA,leg_title,gr=F,legend.pos.h=0.29,
                  legend.pos.t=1,ylab_acur=2,leg_row=3,pal_name){
@@ -42,7 +42,7 @@ kd_fn<- function(df,xvar,catvar,alph=0.2,siz=1.5,xlab,ylab="Density",
   }
 }
 
-#type conversion function
+## ---- type conversion function
 convert_fn<-function(df, col_ind,fn,...) {
   df <- df %>% mutate(across(.cols = col_ind, .fns = fn,...))
 }

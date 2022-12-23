@@ -1,14 +1,10 @@
 #Packages
 source("functions.R")
-packages<-c("tidyverse","readxl","MetBrewer","scales","rio","RColorBrewer")
+packages<-c("tidyverse","readxl","MetBrewer","scales","rio","RColorBrewer","fs")
 package_fn(packages)
 
 #folder to store all plots
-plot_dir<-"ggplots"
-if (!dir.exists(plot_dir)) {dir.create(plot_dir)}
-
-#Use functions
-source("functions.R")
+dir_create("ggplots")
 
 #read data
 sheets<-import_list("KDF.xlsx")
@@ -54,7 +50,7 @@ tibble(catvar=catvar,
        xlab=rep(c("Log GDP Per Capita","Relative Income Per capita",
               "Growth Rate of GDP per capita"),each=2),
        legend.pos.t=c(rep(1,2),1,0.11,rep(1,2))) %>% 
-  mutate(plot=pmap(.,kd_fn,pal_name="Hokusai"))%>% 
+  mutate(plot=pmap(.,kd_fn,pal_name="Hokusai1"))%>% 
   mutate(filename = paste0("ggplots/", xlab, leg_title,".png")) %>% 
   select(plot,filename) %>% 
   pwalk(ggsave,width = 22.5,
