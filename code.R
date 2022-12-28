@@ -41,15 +41,17 @@ xvar<-df %>% map(~.x %>% select_if(is.numeric) %>% names()) %>% unlist()
 
 #plots
 tibble(catvar=catvar,
-       leg_title=rep(c("Country","Period"),times=3),
        legend.pos.h=c(0.33,0.29,0.73,0.29,0.274,0.29),
        leg_row=c(4,3,5,3,5,3),
        df=df,
        xvar=xvar,
-       gr=as.logical(rep(c("FALSE","FALSE","TRUE"),each=2)),
        xlab=rep(c("Log GDP Per Capita","Relative Income Per capita",
-              "Growth Rate of GDP per capita"),each=2),
-       legend.pos.t=c(rep(1,2),1,0.11,rep(1,2))) %>% 
+                  "Growth Rate of GDP per capita"),each=2),
+       legend.pos.t=c(rep(1,2),1,0.11,rep(1,2))) |> 
+  mutate(leg_title =case_when(catvar=="Year"~"Period",
+                              TRUE~catvar),
+         gr=case_when(xvar=="Growth Rate of GDP per capita"~TRUE,
+                      TRUE~FALSE))%>% 
   mutate(plot=pmap(.,kd_fn,pal_name="Hokusai1"))%>% 
   mutate(filename = paste0("ggplots/", xlab, leg_title,".png")) %>% 
   select(plot,filename) %>% 
